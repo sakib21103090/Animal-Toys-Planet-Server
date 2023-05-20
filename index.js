@@ -56,7 +56,15 @@ async function run() {
       res.send(result);
     });
 
-    
+    app.get("/AllToys", async (req, res) => {
+      const Toys = await AddAToyCollection.find({}).limit(20).toArray();
+        // .sort({ createdAt: -1 })
+        
+      res.send(Toys);
+    });
+
+  
+
     
     app.get('/Category',async(req,res)=>{
         const cursor=CategoryCollection.find();
