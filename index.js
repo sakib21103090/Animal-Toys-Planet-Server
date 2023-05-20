@@ -31,18 +31,12 @@ async function run() {
     const CategoryCollection=client.db('AnimalPlanet').collection('Category')
     const AddAToyCollection=client.db('AnimalPlanet').collection('AddAToy')
 
-    app.post("/AddAToy", async (req, res) => {
-      const body = req.body;
-      const result = await AddAToyCollection.insertOne(body);
-      console.log(body)
-      res.send(result);
-    });
-    
-    app.get('/Category',async(req,res)=>{
-        const cursor=CategoryCollection.find();
-        const result=await cursor.toArray();
-        res.send(result);
-    })
+    const indexKeys = { name: 1}; // Replace field1 and field2 with your actual field names
+    const indexOptions = { name: "ToyName" }; // Replace index_name with the desired index name
+    const result = await AddAToyCollection.createIndex(indexKeys, indexOptions);
+    console.log(result);
+
+   
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
