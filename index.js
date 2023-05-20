@@ -64,6 +64,13 @@ async function run() {
     });
 
   
+    app.get("/MyToys/:email", async (req, res) => {
+      console.log(req.params.email);
+      const toys = await AddAToyCollection
+        .find({
+          sellerEmail: req.params.email,}).toArray();
+      res.send(toys);
+    });
 
     
     app.get('/Category',async(req,res)=>{
