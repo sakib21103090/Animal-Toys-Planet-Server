@@ -36,7 +36,33 @@ async function run() {
     const result = await AddAToyCollection.createIndex(indexKeys, indexOptions);
     console.log(result);
 
-   
+    app.get("/getToyName/:text", async (req, res) => {
+      const text = req.params.text;
+      const result = await AddAToyCollection
+        .find({
+          $or: [
+            { name: { $regex: text, $options: "i" } }
+           
+          ],
+        })
+        .toArray();
+      res.send(result);
+    });
+
+    app.post("/AddAToy", async (req, res) => {
+      const body = req.body;
+      const result = await AddAToyCollection.insertOne(body);
+      console.log(body)
+      res.send(result);
+    });
+
+    
+    
+    app.get('/Category',async(req,res)=>{
+        const cursor=CategoryCollection.find();
+        const result=await cursor.toArray();
+        res.send(result);
+    })
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
