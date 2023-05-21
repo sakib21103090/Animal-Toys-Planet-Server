@@ -72,12 +72,12 @@ async function run() {
       res.send(toys);
     });
 
-    app.get("/MyToys/:id", async (req, res) => {
-      console.log(req.params.id);
+    app.get("/allToy/:id", async (req, res) => {
+     const id= req.params.id;
       const query={_id: new ObjectId(id)}
-      const toysId = await AddAToyCollection
- .findOne(query);
-      res.send(toysId);
+      console.log(query);
+      const result = await AddAToyCollection.findOne(query);
+      res.send(result);
     });
     
 
