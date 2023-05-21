@@ -68,7 +68,7 @@ async function run() {
       console.log(req.params.email);
       const toys = await AddAToyCollection
         .find({
-          sellerEmail: req.params.email,}).toArray();
+          sellerEmail: req.params.email,}).sort({price :1}).toArray();
       res.send(toys);
     });
 
