@@ -11,7 +11,7 @@ app.use(cors());
 app.use (express.json());
 
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.as0dvvq.mongodb.net/?retryWrites=true&w=majority`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -71,6 +71,23 @@ async function run() {
           sellerEmail: req.params.email,}).toArray();
       res.send(toys);
     });
+
+    app.get("/MyToys/:id", async (req, res) => {
+      console.log(req.params.id);
+      const query={_id: new ObjectId(id)}
+      const toysId = await AddAToyCollection
+ .findOne(query);
+      res.send(toysId);
+    });
+    
+
+    app.delete('/MyToys/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = {_id : new ObjectId(id)}
+      const result = await AddAToyCollection.deleteOne(query);
+      res.send(result);
+  })
+
 
     
     app.get('/Category',async(req,res)=>{
